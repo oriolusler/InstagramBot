@@ -22,31 +22,25 @@ class Insta(object):
         # Load account page
         time.sleep(2)
         self.driver.get("https://www.instagram.com/{0}/".format(self.username))
-
-        # Click the 'Follower(s)' link
-        self.driver.find_element_by_partial_link_text("seguidores").click()
+        # self.driver.find_element_by_partial_link_text("seguidores").click()
         time.sleep(2)
 
-        # xpath = "/html/body/div[4]/div/div/div[2]/div/div[2]/ul/li"
+        number_of_followers = int(self.driver.find_element_by_xpath("//li[2]/a/span").text)
+        self.driver.find_element_by_xpath("//a[@href='/" + self.username + "/followers/']").click()
+
+        time.sleep(2)
 
         dialog = self.driver.find_element_by_xpath('/html/body/div[3]/div/div/div[2]')
-        time.sleep(1)
         actions = wd.ActionChains(self.driver)
-        time.sleep(1)
         actions.move_to_element(dialog)
-        time.sleep(1)
-
         actions.click()
-        time.sleep(1)
-        actions.send_keys(Keys.SPACE)  # Replace with whichever keys you want.
-        actions.perform()
-        time.sleep(1)
-        actions.send_keys(Keys.SPACE)  # Replace with whichever keys you want.
-        actions.perform()
-        time.sleep(1)
-        actions.send_keys(Keys.SPACE)  # Replace with whichever keys you want.
-        actions.perform()
-        time.sleep(10)
+
+        number_of_iteration = number_of_followers / 6
+
+        for x in range(0, number_of_iteration):
+            time.sleep(1)
+            actions.send_keys(Keys.SPACE)  # Replace with whichever keys you want.
+            actions.perform()
 
         # dialog.click()
         # print "HEREaaassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssa"
@@ -78,5 +72,3 @@ class Insta(object):
         # print("FOLLOWERS")
         #
         # return followers
-
-
